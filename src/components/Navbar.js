@@ -49,9 +49,9 @@ export default function Navbar() {
 				<FontAwesomeIcon icon={faBars} className='menu-icon'></FontAwesomeIcon>
 				<div className='link-container'>
 					<StyledLink to='/'>Home</StyledLink>
-					<StyledLink to='/'>Arena</StyledLink>
-					<StyledLink to='/'>Whitepaper</StyledLink>
-					<StyledLink to='/'>Staking</StyledLink>
+					<StyledLink to='/arena'>Arena</StyledLink>
+					<StyledLink to='/whitepaper'>Whitepaper</StyledLink>
+					<StyledLink to='/staking'>Staking</StyledLink>
 				</div>
 			</Container>
 			<Divider />
