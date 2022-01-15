@@ -1,5 +1,10 @@
 import React from 'react';
-
+import './Arena.css'
+import Navbar from '../components/Navbar'
 export default function Arena() {
-    return <h3>Hello Arena!</h3>
+    return (
+        <div className='Arena'>
+            <Navbar></Navbar>
+        </div>
+    )
 }

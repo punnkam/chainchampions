@@ -13,17 +13,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <header className="App-header">
-          <Navbar/>
-        </header>
-
         <Routes>
+          <Route path="/" element={<Home /> } />
           <Route path='/arena' element={<Arena />} />
           <Route path='/staking' element={<Staking />} />
           <Route path='/whitepaper' element={<Whitepaper />} />
         </Routes>  
-      
-        <a class="nes-btn" href="/">Random Button</a>
       </BrowserRouter>
   </div>
   );

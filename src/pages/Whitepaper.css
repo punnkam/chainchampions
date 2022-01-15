@@ -1,0 +1,35 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.Whitepaper {
+  width: 100vw;
+  background-image: url(../images/background2.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Whitepaper .nes-container {
+  margin-top: 5px;
+  width: 50%;
+}
+
+.Whitepaper .nes-container p {
+  font-size: 10px;
+  color: black;
+}
+/*# sourceMappingURL=Whitepaper.css.map */

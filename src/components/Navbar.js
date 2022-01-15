@@ -1,13 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import './Navbar.css'
-
-const Divider = styled.hr`
-	border-top: 3px dashed black;
-	width: 100%;
-`;
-
 
 export default function Navbar() {
 	return (
@@ -21,7 +14,6 @@ export default function Navbar() {
 					<Link className='link' to='/staking'>Staking</Link>
 				</div>
 			</div>
-			<Divider />
 		</div>
 		
 	)
