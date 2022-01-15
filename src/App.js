@@ -13,7 +13,7 @@ function App() {
         
       </header>
       
-      <a class="nes-btn" href="#">Random Button</a>
+      <a class="nes-btn" href="/">Random Button</a>
 
   </div>
   );
