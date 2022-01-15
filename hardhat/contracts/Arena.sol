@@ -7,9 +7,10 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "./Champion.sol";
 
 contract Arena is ERC721, ERC721Enumerable, Ownable {
-    uint256[] winners;
+    uint256[] winners; //dynamic size depending on bounty pool
     uint256 gameCount;
     uint256 lastGameBlock;
     bool gameActive;
@@ -18,7 +19,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
     uint256 public constant entryOpenBlocks = 69;
     uint256 public constant delayGameBlocks = 69;
 
-    mapping(uint256 => address) championDepositor;
+    mapping(uint256 => address) championDepositor; //change to check champion mapping
 
     // MODIFIERS
     modifier onlyOpenArena() {
@@ -94,6 +95,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
             uint256 id = tokenOfOwnerByIndex(holdingAddress, i);
 
             if (championDepositor[id] == _owner) {
+                //change to check champion mapping
                 champions[index++] = id;
             }
         }
@@ -113,6 +115,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         // _crownChamps()
         // Change state vars
         // Clear state (not championDepositor)
+        // Send tax to controller
     }
 
     /* 
@@ -134,18 +137,18 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
 
     function leaveArena(uint256 _tokenId) external onlyNonGame {
         require(
-            championDepositor[_tokenId] == msg.sender,
+            championDepositor[_tokenId] == msg.sender, //change to check champion mapping
             "Invalid tokenId, not your champ"
         );
 
         // Add a call to Champion to change metadata
 
         // Clear state
-        delete championDepositor[_tokenId];
+        delete championDepositor[_tokenId]; //change to check champion mapping
 
         // Check if champion is winner and return bounty if so
-        for (uint256 i = 0; i < 10; i++) {
-            if (champion[i] == _tokenId) {
+        for (uint256 i = 0; i < winners.length; i++) {
+            if (winners[i] == _tokenId) {
                 payable(msg.sender).transfer(_taxedBounty());
             }
         }
@@ -163,10 +166,15 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
 
     function _joinArena(uint256 _tokenId) {
         // Transfer bounty (check that it is 0.1e)
+        // Toggle attribute of champion contract
     }
 
     function _taxedBounty() internal returns (uint256) {
         return address(this).balance - _twoPercent(address(this).balance);
+    }
+
+    function getTax() internal returns (uint256) {
+        return _twoPercent(address(this).balance);
     }
 
     function _twoPercent(uint256 _value) internal returns (uint256) {
@@ -174,4 +182,8 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         uint256 twoPercent = SafeMath.div(SafeMath.mul(roundValue, 200), 10000);
         return twoPercent;
     }
+
+    /*
+        MISC METHODS
+    */
 }
