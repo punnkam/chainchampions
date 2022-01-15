@@ -23,6 +23,5 @@ export default function Navbar() {
 			</div>
 			<Divider />
 		</div>
-		
 	)
 }

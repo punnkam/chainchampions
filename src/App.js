@@ -18,10 +18,11 @@ function App() {
         </header>
 
         <Routes>
+          <Route path='/' element={<Home />} />
           <Route path='/arena' element={<Arena />} />
           <Route path='/staking' element={<Staking />} />
           <Route path='/whitepaper' element={<Whitepaper />} />
-        </Routes>  
+        </Routes>
       
         <a class="nes-btn" href="/">Random Button</a>
       </BrowserRouter>
