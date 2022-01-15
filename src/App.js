@@ -1,7 +1,6 @@
 import './App.css';
 import 'nes.css/css/nes.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar'
 
 // pages imports
 import Arena from './pages/Arena';
