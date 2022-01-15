@@ -18,6 +18,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-left: 2%;
         .title-link
         {
             text-align: center;
@@ -26,10 +27,11 @@
         }
         .link-container
         {
-            width: 50%;
+            width: 40%;
             display: flex;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: space-between;
+            padding-right: 2%;
             .link
             {
                 color: white;
@@ -56,12 +58,19 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+        padding-left: 0px !important;
+        .title-link
+        {
+            padding-left: 0px !important;
+        }
         .link-container
         {
             width: 100% !important;
             display: flex;
             align-items: center;
             justify-content: space-evenly;
+            padding-left: 2% !important;
+            
             .link
             {
                 font-size: .75rem !important;
