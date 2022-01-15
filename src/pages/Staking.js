@@ -5,7 +5,6 @@ export default function Staking() {
     return (
         <div className='Staking'>
             <Navbar></Navbar>
-            
         </div>
     )
 }
