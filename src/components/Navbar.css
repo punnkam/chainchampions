@@ -3,10 +3,14 @@
           box-sizing: border-box;
   padding: 0px;
   margin: 0px;
+  color: white;
 }
 
 .Navbar {
+  background-color: black;
   width: 100vw;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .Navbar .container {
@@ -24,7 +28,7 @@
 
 .Navbar .container .title-link {
   text-align: center;
-  color: black;
+  color: white;
   font-size: 1.7rem;
 }
 
@@ -42,7 +46,7 @@
 }
 
 .Navbar .container .link-container .link {
-  color: black;
+  color: white;
   font-size: 1rem;
 }
 
