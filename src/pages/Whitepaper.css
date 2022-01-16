@@ -7,10 +7,17 @@
 
 .Whitepaper {
   width: 100vw;
-  background-image: url(../images/background1.jpg);
+  min-height: 100vh;
+  background-image: url(../images/background4.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.Whitepaper .whitepaper-container {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18,18 +25,34 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
-.Whitepaper .nes-container {
-  margin-top: 5px;
-  width: 50%;
+.Whitepaper .whitepaper-container .text-container {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  margin-bottom: 16px;
 }
 
-.Whitepaper .nes-container p {
-  font-size: 10px;
-  color: black;
+.Whitepaper .whitepaper-container .text-container p {
+  font-size: 12px;
 }
 /*# sourceMappingURL=Whitepaper.css.map */

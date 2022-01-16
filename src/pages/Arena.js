@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import './Arena.css'
 import Navbar from '../components/Navbar'
 import Champ from '../images/long_metal_sword_or_blue_steel.png'
@@ -8,20 +8,15 @@ import 'nes.css/css/nes.min.css';
 export default function Arena() {
     let joinRef = useRef();
 
-    let status = true;
-    let user = true;    
+    const [joinedState, setJoinedState] = useState(false)
+    const [gameState, setGameState] = useState(false)
 
-    const isUserIn = (userIn) =>
-    {
-        if(userIn)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    useEffect(() => {
+        setJoinedState(true)
+        setGameState(false)
+        gameOngoing(gameState, joinedState)
+    }, [joinedState, gameState])
+
     const gameOngoing = (status, joined) =>
     {
         if(status)
@@ -58,9 +53,6 @@ export default function Arena() {
                         </div>
                         <p>Max 3 champions</p> 
                     </div>
-                    <div className='arena-desktop-container'>
-                        {/* To do */}
-                    </div>
                     <div className='stats-container'>
                         <p>Stats</p>
                         <ul className='stats-list'>
@@ -73,8 +65,7 @@ export default function Arena() {
                 </div>
                 <div className='arena-container-2'>
                     <p>Arena Status</p>
-                    <button className='nes-btn'  ref={joinRef}>Join Arena</button>
-                    {/* disabled={gameOngoing(status, isUserIn(user))} */}
+                    <button className='nes-btn' ref={joinRef}>Join Arena</button>
                 </div>
             </div>
         </div>
