@@ -9,12 +9,13 @@
   font-size: 12px;
   width: 100vw;
   height: 100vh;
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
   background-image: url(../images/background4.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .Arena .main-container {

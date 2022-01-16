@@ -13,6 +13,9 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    overflow-y: scroll;
     object-fit: contain;
     .main-container
     {
