@@ -1,37 +1,80 @@
 import React from 'react';
+import { useRef } from 'react'
 import './Arena.css'
 import Navbar from '../components/Navbar'
 import Champ from '../images/long_metal_sword_or_blue_steel.png'
+import 'nes.css/css/nes.min.css';
+
 export default function Arena() {
+    let joinRef = useRef();
+
+    let status = true;
+    let user = true;    
+
+    const isUserIn = (userIn) =>
+    {
+        if(userIn)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    const gameOngoing = (status, joined) =>
+    {
+        if(status)
+        {
+            joinRef.current.innerText = "Arena ongoing"
+            joinRef.current.classList.add("is-disabled")
+            return true;
+        }
+        else if(!joined)
+        {
+            joinRef.current.innerText = "Join Arena"
+            joinRef.current.classList.remove('is-disabled')
+            return false;
+        }
+        else if(joined)
+        {
+            joinRef.current.innerText = "Waiting for Arena to start"
+            joinRef.current.classList.add("is-disabled")
+            return true;
+        }
+    }
+
     return (
         <div className='Arena'>
             <Navbar></Navbar>
             <div className='main-container'>
-                <div className='arena-container-1'>
+                <div className='arena-container-1  nes-container is-dark'>
                     <div className='user-container'>
-                        <div className='row-1'>
-                            <p>Your champs</p>
-                            <div className='champs-container'>
-                                <img src={Champ} alt='champ'></img>
-                                <img src={Champ} alt='champ'></img>
-                                <img src={Champ} alt='champ'></img>
-                            </div>
+                        <p>Your champs</p>
+                        <div className='champs-container'>
+                            <img src={Champ} className='nes-pointer' alt='champ'></img>
+                            <img src={Champ} className='nes-pointer' alt='champ'></img>
+                            <img src={Champ} className='nes-pointer' alt='champ'></img>
                         </div>
-                        <div className='row-2'>
-
-                        </div>
+                        <p>Max 3 champions</p> 
                     </div>
                     <div className='arena-desktop-container'>
-
+                        {/* To do */}
                     </div>
                     <div className='stats-container'>
-
+                        <p>Stats</p>
+                        <ul className='stats-list'>
+                            {/* 3 functions to retrieve players , bounty, and game */}
+                            <li className='stat'>game: #1</li>
+                            <li className='stat'>total players left:100</li>
+                            <li className='stat'>total bounty staked:5 Eth</li>
+                        </ul>
                     </div>
                 </div>
                 <div className='arena-container-2'>
-                    <div className='arena-mobile-container'>
-
-                    </div>
+                    <p>Arena Status</p>
+                    <button className='nes-btn'  ref={joinRef}>Join Arena</button>
+                    {/* disabled={gameOngoing(status, isUserIn(user))} */}
                 </div>
             </div>
         </div>
