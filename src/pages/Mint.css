@@ -15,4 +15,28 @@
   background-attachment: fixed;
   overflow-y: scroll;
 }
+
+.Mint .mint-container {
+  height: 75%;
+  width: 100%;
+  border: solid;
+  border-color: green;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Mint .mint-container .mint-text {
+  text-align: center;
+}
 /*# sourceMappingURL=Mint.css.map */
