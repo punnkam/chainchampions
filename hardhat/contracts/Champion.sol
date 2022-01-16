@@ -26,7 +26,7 @@ contract Champion is ERC721, Ownable {
     Champion[] public champions;
 
     mapping(uint256 => address) public championToOwner;
-    mapping(address => uint256) ownerChampionCount;
+    mapping(address => uint256) public ownerChampionCount;
 
     function _createChampion(string memory _battleType, uint256 _id) private {
         champions.push(Champion(_battleType, _id, 0, 0));
@@ -38,6 +38,28 @@ contract Champion is ERC721, Ownable {
     function _generateRandomId() private view returns (uint256) {
         // uint rand = uint(keccak256(abi.en))
         return rand % idMod;
+    }
+
+    function getOwner(uint256 _tokenId) public view returns (address) {
+        return championToOwner[_tokenId];
+    }
+
+    function getChampionCount(address _owner) public view returns (uint256) {
+        return ownerChampionCount[_owner];
+    }
+
+    function getChampionDetails(uint256 _tokenId)
+        public
+        view
+        returns (
+            string,
+            uint256,
+            uint256,
+            uint256
+        )
+    {
+        Champion guy = tokenToChampion[_tokenId];
+        return (guy.battleType, guy.id, guy.numWins, guy.level);
     }
 
     function createRandomChampion() public {
