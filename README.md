@@ -1,2 +1,3 @@
-# chainchampions
-On chain battle game
+# Chain Champions
+
+On chain game experiment
