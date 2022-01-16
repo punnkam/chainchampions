@@ -134,8 +134,8 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
     /* 
         OWNER METHODS (called by script)
     */
-    function ownerWithdraw() public onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
+    function ownerWithdraw(uint256 amount) public onlyOwner {
+        payable(msg.sender).transfer(amount);
     }
 
     function turnOffGame() external onlyOwner {
@@ -220,6 +220,13 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
             numWinners = 18;
         }
         uint256[] arrWinner = new uint256[numWinners]();
+
+        // Temporary implemention for demo purposes --> will be using Chainlink VRF for real
+        uint256 randomNum = random(0, champions.length);
+        for (uint256 i = randomNum; i < numWinners; i++) {
+            arrWinner.push(champions[i]);
+        }
+        return arrWinner;
     }
 
     function _joinArena(uint256 _tokenId) internal payable {
@@ -250,6 +257,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         emit ChampionEntered(owner, _tokenId);
     }
 
+    // Not functional right now
     function _multiJoinArena(uint256[] _tokenIds) internal payable {
         require(
             _tokenIds.length <= 3,
@@ -257,8 +265,6 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         );
 
         // Check not in arena --> Doesn't work rn
-
-        address owner;
         // for (uint256 i = 0; i < _tokenIds.length; i++) {
         //     owner = champContract.getOwner(_tokenId);
         //     require(
@@ -302,6 +308,13 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         uint256 roundValue = SafeMath.ceil(_value, 100);
         uint256 twoPercent = SafeMath.div(SafeMath.mul(roundValue, 200), 10000);
         return twoPercent;
+    }
+
+    function random(uint256 start, uint256 end) internal returns (uint256) {
+        uint256 randomNumber = uint256(
+            keccak256(abi.encodePakced(block.timestamp, block.difficulty))
+        ) % (end - start);
+        return randomNumber + start;
     }
 
     /*
