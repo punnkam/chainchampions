@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Camp",
+  "sourceName": "contracts/Camp.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212200c3d058c2f0c35e9494017b9e0b9742f49c5dca6810154fc32d0eda17acfb4fd64736f6c63430008000033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212200c3d058c2f0c35e9494017b9e0b9742f49c5dca6810154fc32d0eda17acfb4fd64736f6c63430008000033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
