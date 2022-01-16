@@ -2,6 +2,7 @@ import React from 'react'
 import { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
+import 'nes.css/css/nes.min.css';
 
 
 export default function Navbar() {
@@ -27,6 +28,7 @@ export default function Navbar() {
 					<NavLink className='link' style={({isActive}) =>
 				isActive ? activeStyle : undefined} to='/staking'>Staking</NavLink>
 				</div>
+				<button type='button' className='nes-btn' id='wallet-button'>Connect wallet</button>
 			</div>
 		</div>
 	)
