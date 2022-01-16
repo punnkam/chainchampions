@@ -33,6 +33,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            .stake-buttons-container
+            {
+                display: flex;
+                margin-top: 16px;
+                #stake-button
+                {
+                    margin-right: 8px;
+                }
+                #unstake-button
+                {
+                    margin-left: 8px;
+                }
+            }
         }
     }
+}
+
+#starting-text
+{
+    margin-top: 16px;
 }

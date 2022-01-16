@@ -11,9 +11,6 @@ export default function Navbar() {
 		color: "gray"
 	};
 
-	const linkRef = useRef();
-	console.log(linkRef.current);
-
 	return (
 		<div className='Navbar'>
 			<div className='container'>
