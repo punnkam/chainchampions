@@ -13,7 +13,7 @@ export default function Arena() {
 
     useEffect(() => {
         setJoinedState(true)
-        setGameState(false)
+        setGameState(true)
         gameOngoing(gameState, joinedState)
     }, [joinedState, gameState])
 
@@ -57,7 +57,7 @@ export default function Arena() {
                         <p>Stats</p>
                         <ul className='stats-list'>
                             {/* 3 functions to retrieve players , bounty, and game */}
-                            <li className='stat'>game: #1</li>
+                            <li className='stat'>game:#1</li>
                             <li className='stat'>total players left:100</li>
                             <li className='stat'>total bounty staked:5 Eth</li>
                         </ul>
