@@ -34,6 +34,10 @@
             width: 100%;
             padding: 10px;
             margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
         .welcome-images-container {
             height: 50%;
@@ -56,6 +60,7 @@
             .nav-text{   
                 align-self: center;
                 margin: auto;
+                // adds necessary spacing between button + text
                 margin-right: 5px;
             }
         }
