@@ -8,9 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 import "./Base64.sol";
 
-
 contract Champion is ERC721URIStorage, Ownable {
-
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -18,7 +16,7 @@ contract Champion is ERC721URIStorage, Ownable {
     uint256 idMod = 10**idDigits;
 
     constructor() ERC721("Champions", "CHAMP") {
-        console.log("working");
+        console.log("Deployed champs");
     }
 
     struct Champion {
@@ -73,7 +71,7 @@ contract Champion is ERC721URIStorage, Ownable {
     }
 
     function _generateRandomId() private view returns (uint256) {
-        uint rand = uint(keccak256(abi.encodePacked(block.timestamp)));
+        uint256 rand = uint256(keccak256(abi.encodePacked(block.timestamp)));
         return rand % idMod;
     }
 
@@ -82,34 +80,36 @@ contract Champion is ERC721URIStorage, Ownable {
         mintChampion(randId);
     }
 
+    function tokenURI(uint256 _tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        Champion memory currChamp = tokenToChampion[_tokenId];
 
-    function tokenURI(uint256 _tokenId) public view override returns (string memory) {
-  Champion memory currChamp = tokenToChampion[_tokenId];
+        string memory json = Base64.encode(
+            abi.encodePacked(
+                '{"name": "',
+                "Champion",
+                " -- NFT #: ",
+                Strings.toString(_tokenId),
+                '", "description": "This champion is going to take over the arena!", "image": "',
+                "https://i.imgur.com/efLejde.jpeg",
+                '", "attributes": [ { "trait_type": "Number of Wins", "value": ',
+                Strings.toString(currChamp.numWins),
+                '}, { "trait_type": "Level", "value": ',
+                Strings.toString(currChamp.level),
+                '}, { "trait_type": "Champion ID", "value": ',
+                Strings.toString(currChamp.id),
+                "} ]}"
+            )
+        );
 
-  
+        string memory output = string(
+            abi.encodePacked("data:application/json;base64,", json)
+        );
 
-  string memory json = Base64.encode(
-    abi.encodePacked(
-      '{"name": "',
-      "Champion",
-      ' -- NFT #: ',
-      Strings.toString(_tokenId),
-      '", "description": "This champion is going to take over the arena!", "image": "',
-      "https://i.imgur.com/efLejde.jpeg",
-      '", "attributes": [ { "trait_type": "Number of Wins", "value": ',Strings.toString(currChamp.numWins), '}, { "trait_type": "Level", "value": ',
-      Strings.toString(currChamp.level),'}, { "trait_type": "Champion ID", "value": ',
-      Strings.toString(currChamp.id),'} ]}'
-    )
-  );
-
-  string memory output = string(
-    abi.encodePacked("data:application/json;base64,", json)
-  );
-  
-  return output;
-}
-    
-
-
-    
+        return output;
+    }
 }

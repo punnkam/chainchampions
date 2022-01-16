@@ -3,13 +3,12 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./Champion.sol";
 
-contract Arena is ERC721, ERC721Enumerable, Ownable {
+contract Arena is Ownable {
     uint256[] winners; //dynamic size depending on bounty pool
     uint256[] champions; // tokenIdds in the pool
     uint256 battleCount;
@@ -52,8 +51,8 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         uint256 battleCount;
         uint256 entryOpenBlock;
         uint256 entryClosedBlock;
-        uint256 gameStartBlock;
-        uint256 gameEndBlock;
+        uint256 battleStartBlock;
+        uint256 battleEndBlock;
         uint256 numPlayers;
         uint256 bounty;
         bool entryActive;
@@ -71,7 +70,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         info.entryOpenBlock = entryOpenBlock();
         info.battleStartBlock = entryClosedBlock();
         info.battleEndBlock = info.battleStartBlock + battleLengthBlocks;
-        info.numPlayers = getChampionCount[address(this)];
+        info.numPlayers = champContract.getChampionCount(address(this));
         info.entryActive = entryOpen();
         info.battleActive = battleActive;
         info.bounty = getBalance();
@@ -88,18 +87,18 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
     }
 
     function entryOpenBlock() public view returns (uint256) {
-        return lastGameBlock + delayGameBlocks;
+        return lastBattleBlock + delayBattleBlocks;
     }
 
     function entryClosedBlock() public view returns (uint256) {
         return entryOpenBlock() + entryOpenBlocks;
     }
 
-    function getWinners() public view returns (uint256[]) {
+    function getWinners() public view returns (uint256[] memory) {
         return winners;
     }
 
-    function getChampions() public view returns (uint256[]) {
+    function getChampions() public view returns (uint256[] memory) {
         return champions;
     }
 
@@ -165,8 +164,10 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         delete champions;
 
         // Send tax to controller
-        address controller = "0x0";
-        controller.send(_getTax());
+        address controller = address(
+            0xA003ED3fFaDF802aBC181fb64951Ef507c61F923
+        );
+        payable(controller).transfer(_getTax());
 
         // Allow winners to withdraw
         uint256 prizePerWinner = _getTaxedBounty() / winners.length;
@@ -176,7 +177,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         }
 
         // Emit end game event
-        emit BattleEnd(winners, bounty, numPlayers);
+        emit BattleEnd(winners, _getTaxedBounty(), champions.length);
     }
 
     /* 
@@ -194,42 +195,6 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         onlyGameActive
         onlyOpenArena
     {
-        _joinArena(_tokenId);
-    }
-
-    function multiJoinArena(uint256[] memory _tokenIds)
-        external
-        onlyGameActive
-        onlyOpenArena
-    {
-        _multiJoinArena(_tokenIds);
-    }
-
-    /* 
-        INTERNAL METHODS
-    */
-    function _crownChamps() internal returns (uint256[]) {
-        // Probabilistic calculation and put tokenIds in champions
-        uint256 numWinners;
-        uint256 totalBounty = getBalance();
-        if (totalBounty < 25 ether) {
-            numWinners = 5;
-        } else if (totalBounty < 50 ether) {
-            numWinners = 10;
-        } else {
-            numWinners = 18;
-        }
-        uint256[] arrWinner = new uint256[numWinners]();
-
-        // Temporary implemention for demo purposes --> will be using Chainlink VRF for real
-        uint256 randomNum = random(0, champions.length);
-        for (uint256 i = randomNum; i < numWinners; i++) {
-            arrWinner.push(champions[i]);
-        }
-        return arrWinner;
-    }
-
-    function _joinArena(uint256 _tokenId) internal payable {
         // Check not in arena --> Doesn't work right now
         // Champion storage champ = someMapping[_tokenId];
         // require(
@@ -247,7 +212,7 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
 
         // Transfer bounty (check that it is 0.1e)
         require(
-            msg.value == perPerEnter,
+            msg.value == pricePerEnter,
             "You need to send 0.1 Ether to enter"
         );
 
@@ -258,7 +223,12 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
     }
 
     // Not functional right now
-    function _multiJoinArena(uint256[] _tokenIds) internal payable {
+    function multiJoinArena(uint256[] memory _tokenIds)
+        external
+        payable
+        onlyGameActive
+        onlyOpenArena
+    {
         require(
             _tokenIds.length <= 3,
             "The maximum number of champs in The Arena is 3"
@@ -296,6 +266,29 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
         //     emit ChampionEntered(owner, _tokenId);
     }
 
+    /* 
+        INTERNAL METHODS
+    */
+    function _crownChamps() internal returns (uint256[] storage) {
+        // Probabilistic calculation and put tokenIds in champions
+        uint256 numWinners;
+        // uint256 totalBounty = getBalance();
+        // if (totalBounty < 25 ether) {
+        //     numWinners = 5;
+        // } else if (totalBounty < 50 ether) {
+        //     numWinners = 10;
+        // } else {
+        //     numWinners = 18;
+        // }
+
+        // Temporary implemention for demo purposes --> will be using Chainlink VRF for real
+        uint256 randomNum = random(0, champions.length);
+        for (uint256 i = randomNum; i < numWinners; i++) {
+            winners.push(champions[i]);
+        }
+        return winners;
+    }
+
     function _getTaxedBounty() internal returns (uint256) {
         return getBalance() - _twoPercent(getBalance());
     }
@@ -305,14 +298,12 @@ contract Arena is ERC721, ERC721Enumerable, Ownable {
     }
 
     function _twoPercent(uint256 _value) internal returns (uint256) {
-        uint256 roundValue = SafeMath.ceil(_value, 100);
-        uint256 twoPercent = SafeMath.div(SafeMath.mul(roundValue, 200), 10000);
-        return twoPercent;
+        return (_value / 100) * 2;
     }
 
     function random(uint256 start, uint256 end) internal returns (uint256) {
         uint256 randomNumber = uint256(
-            keccak256(abi.encodePakced(block.timestamp, block.difficulty))
+            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
         ) % (end - start);
         return randomNumber + start;
     }
