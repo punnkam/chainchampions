@@ -27,6 +27,8 @@ export default function Navbar() {
 				isActive ? activeStyle : undefined} to='/whitepaper'>Whitepaper</NavLink>
 					<NavLink className='link' style={({isActive}) =>
 				isActive ? activeStyle : undefined} to='/staking'>Staking</NavLink>
+					<NavLink className='link' style={({isActive}) => 
+				isActive ? activeStyle : undefined} to='/mint'>Mint</NavLink>
 				</div>
 				<button type='button' className='nes-btn' id='wallet-button'>Connect wallet</button>
 			</div>
