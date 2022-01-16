@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Mint.css';
 import Navbar from '../components/Navbar';
+import '../Champion.json';
 
 export default function Mint() {
     // to be changed based on chain data
