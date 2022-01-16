@@ -12,12 +12,15 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .main-container {
-  border-style: solid;
   height: 100vh;
   width: 100vw;
+  margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,41 +31,27 @@
 }
 
 .main-container .welcome-container {
-  border-style: solid;
-  border-color: blue;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.main-container .welcome-container .welcome-text-container {
+  width: 100%;
+  padding: 10px;
+  margin: auto;
+}
+
+.main-container .welcome-container .welcome-images-container {
   height: 50%;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-.main-container .welcome-container .welcome-text-and-images {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  height: 100%;
-  width: 100%;
-}
-
-.main-container .welcome-container .welcome-text-and-images .welcome-text-container {
-  border-style: solid;
-  height: 100%;
-  width: 50%;
-}
-
-.main-container .welcome-container .welcome-text-and-images .welcome-images-container {
-  border-style: solid;
-  height: 100%;
-  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -74,20 +63,34 @@
           align-items: center;
 }
 
-.main-container .welcome-container .welcome-text-and-images .welcome-images-container .nft-img {
+.main-container .welcome-container .welcome-images-container .nft-img {
   height: 75%;
   padding: 10px;
   margin: 10px;
-  border: solid;
 }
 
-.main-container .team-container {
-  border-style: solid;
-  border-color: red;
-  height: 50%;
-  width: 100%;
+.main-container .welcome-container .collect-a-champion {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main-container .welcome-container .collect-a-champion .nav-text {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: auto;
+  margin-right: 5px;
 }
 /*# sourceMappingURL=Home.css.map */
