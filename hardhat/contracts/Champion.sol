@@ -3,41 +3,51 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
+import "./Base64.sol";
 
-contract Champion is ERC721, Ownable {
-    //structure for an nft
 
-    event NewChampion(string battleType, uint256 id);
+contract Champion is ERC721URIStorage, Ownable {
 
-    uint256 idDigits = 16;
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
+    uint256 idDigits = 8;
     uint256 idMod = 10**idDigits;
 
+    constructor() ERC721("Champions", "CHAMP") {
+        console.log("working");
+    }
+
     struct Champion {
-        string battleType;
         uint256 id;
+        uint256 token;
         uint256 numWins;
         uint256 level;
-        //health and max health attributes?
-        //name attribute?
-        //armor, attack damage attributes?
+        string imageURI;
     }
 
     Champion[] public champions;
 
+    mapping(uint256 => Champion) public tokenToChampion;
     mapping(uint256 => address) public championToOwner;
-    mapping(address => uint256) public ownerChampionCount;
+    mapping(address => uint256) ownerChampionCount;
 
-    function _createChampion(string memory _battleType, uint256 _id) private {
-        champions.push(Champion(_battleType, _id, 0, 0));
-        championToOwner[id] = msg.sender;
+    function mintChampion(uint256 _id) public {
+        uint256 newItemId = _tokenIds.current();
+        _safeMint(msg.sender, newItemId);
+        tokenToChampion[newItemId] = Champion({
+            id: _id,
+            token: newItemId,
+            numWins: 0,
+            level: 1,
+            imageURI: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/440px-Image_created_with_a_mobile_phone.png"
+        });
+        championToOwner[newItemId] = msg.sender;
         ownerChampionCount[msg.sender]++;
-        emit NewChampion(battleType, id);
-    }
-
-    function _generateRandomId() private view returns (uint256) {
-        // uint rand = uint(keccak256(abi.en))
-        return rand % idMod;
+        _tokenIds.increment();
     }
 
     function getOwner(uint256 _tokenId) public view returns (address) {
@@ -52,18 +62,54 @@ contract Champion is ERC721, Ownable {
         public
         view
         returns (
-            string,
+            uint256,
             uint256,
             uint256,
             uint256
         )
     {
-        Champion guy = tokenToChampion[_tokenId];
-        return (guy.battleType, guy.id, guy.numWins, guy.level);
+        Champion memory guy = tokenToChampion[_tokenId];
+        return (guy.token, guy.id, guy.numWins, guy.level);
+    }
+
+    function _generateRandomId() private view returns (uint256) {
+        uint rand = uint(keccak256(abi.encodePacked(block.timestamp)));
+        return rand % idMod;
     }
 
     function createRandomChampion() public {
         uint256 randId = _generateRandomId();
-        uint256 randType = _createChampion(randType, randId); //random 0-2;
+        mintChampion(randId);
     }
+
+
+    function tokenURI(uint256 _tokenId) public view override returns (string memory) {
+  Champion memory currChamp = tokenToChampion[_tokenId];
+
+  
+
+  string memory json = Base64.encode(
+    abi.encodePacked(
+      '{"name": "',
+      "Champion",
+      ' -- NFT #: ',
+      Strings.toString(_tokenId),
+      '", "description": "This champion is going to take over the arena!", "image": "',
+      "https://i.imgur.com/efLejde.jpeg",
+      '", "attributes": [ { "trait_type": "Number of Wins", "value": ',Strings.toString(currChamp.numWins), '}, { "trait_type": "Level", "value": ',
+      Strings.toString(currChamp.level),'}, { "trait_type": "Champion ID", "value": ',
+      Strings.toString(currChamp.id),'} ]}'
+    )
+  );
+
+  string memory output = string(
+    abi.encodePacked("data:application/json;base64,", json)
+  );
+  
+  return output;
+}
+    
+
+
+    
 }
