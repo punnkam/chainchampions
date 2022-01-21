@@ -7,7 +7,7 @@
 * [\[REDACTED\]s](the-basics/redacted-s.md)
 * [Minting](the-basics/minting.md)
 * [The Arena](the-basics/the-arena.md)
-* [The Chamber](the-basics/the-chamber.md)
+* [The Chamber & EXP](the-basics/the-chamber-and-exp.md)
 * [Leaderboard](the-basics/leaderboard.md)
 * [FAQ](the-basics/faq.md)
 

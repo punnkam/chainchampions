@@ -30,3 +30,8 @@
 * Num of wins or W / L&#x20;
 * Bounty earned
 
+## \[REDACTED] Supply
+
+### Initial mint supply of 8888
+
+### Another 8888 can be minted using EXP using a disinflationary model
