@@ -11,14 +11,6 @@
 * [Leaderboard](the-basics/leaderboard.md)
 * [FAQ](the-basics/faq.md)
 
-## Playing the game
-
-* [Battle in Arena](playing-the-game/battle-in-arena.md)
-* [Train in Chamber](playing-the-game/train-in-chamber.md)
-* [Mint a \[REDACTED\]](playing-the-game/mint-a-redacted.md)
-* [Upgrade a \[REDACTED\]](playing-the-game/upgrade-a-redacted.md)
-* [Join the Leaderboard](playing-the-game/join-the-leaderboard.md)
-
 ## Contracts
 
 * [Staking](contracts/staking.md)

@@ -7,3 +7,7 @@ Refer to this https://docs.olympusdao.finance/main/ for structure
 ## Need to develop some sort of meme&#x20;
 
 Trying to get the effect similar to OHM (3, 3). If ur unfamiliar just search up olympus 3,3
+
+
+
+FYI, we don't have to implement everything right away. In crypto there's merit to being mysterious and having a roadmap lmao. Also we don't want to just grind this all out before we test the mkt.

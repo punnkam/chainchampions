@@ -1,11 +1,16 @@
 # The Chamber & EXP
 
-## Live edit
+The Chamber is the training camp for \[REDACTED] to earn experience and become stronger. It is another location (contract) that the \[REDACTED]s may enter. It is essentially a staking mechanism whereby a token is minted to stakers at a TBD rate.&#x20;
 
-You might have noticed that you can pretty much edit anything in this space. This is because the space is in what's know as **live edit** mode. In this mode, anyone who has permission can edit the content directly. This is great for early-days use. It is great for quick changes. No need for complex workflows.
+## EXP Token
 
-At some point, you may reach a greater level of maturity with your content. That's when you may need some of the more powerful workflow features in GitBook…
+EXP is minted to players who stake \[REDACTED] in The Chamber. We can discuss whether this is a pure mint or with the addition of buyback mechanism whereby the royalties earned from trading is used to buy EXP off secondary and distribute it to stakers.
 
-## Locked edits
+The main use cases of EXP are as follows
 
-The alternative to a live edit mode is called **locked edits**. Spaces that are locked for live edits aren't directly editable, and any edits you need to make must be handled through **change requests**. You can lock a space using the space menu and selecting 'Lock live edits'.
+1. Spend EXP to upgrade your \[REDACTED] at an increasingly expensive price (discuss maxing out, cosmetic upgrades etc.) --> This mech burns EXP, removing it from circulation and PAMP
+2. Spend EXP to mint another \[REDACTED] at a constant price (more expensive than upgrading for the first few upgrades) --> Same thing, pumpamentals solid
+
+{% embed url="https://101blockchains.com/tokenomics" %}
+
+### Tokenomics
