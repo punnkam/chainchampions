@@ -1,6 +1,6 @@
-# The Chamber & EXP
+# The Time Chamber & EXP
 
-The Chamber is the training camp for \[REDACTED] to earn experience and become stronger. It is another location (contract) that the \[REDACTED]s may enter. It is essentially a staking mechanism whereby a token is minted to stakers at a TBD rate.&#x20;
+The Time Chamber is the training camp for \[REDACTED] to earn experience and become stronger. It is another location (contract) that the \[REDACTED]s may enter. It is essentially a staking mechanism whereby a token is minted to stakers at a TBD rate.&#x20;
 
 ## EXP Token
 
