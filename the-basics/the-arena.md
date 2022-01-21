@@ -32,7 +32,7 @@ Equations will be placed under the equations section. The probability of winning
 
 Selection will happen by:
 
-1. Looping through all the \[REDACTED]s in the Arena and keep a cumulative count (starting at 0) of total score in a mapping for each \[REDACTED]. Then, select a random number between 1 and the total score (n-th \[REDACTED]'s cumulative count) to pick a winner using Chainlink VRF. We will then set the selected winner's cumulative count to 0.&#x20;
+1. Looping through all the \[REDACTED]s in the Arena and keep a cumulative count (starting at 0) of total rating (or it's complement if rating is descending) in a mapping for each \[REDACTED]. Then, select a random number between 0 and the total rating (n-th \[REDACTED]'s cumulative count) to pick a winner using Chainlink VRF. We will then set the selected winner's cumulative count to 0.&#x20;
 2. At each iteration, we will first check whether the selected winner's cumulative count. If the count is 0, we decrement the counter to run the loop again.
 
 ```solidity
@@ -50,10 +50,23 @@ for(uint256 i; i < players.length; i++) {
 }
 
 // Called every 88 blocks (might be gas inefficient)
+// Not really sure how to implement this yet tbh, can mb use tokenByIndex()
 function selectWinner() internal returns (uint256) {
-    return getRandomNumber() % players.length; // From ChainlinkVRF
+    uint256 rand = getRandomNumber() % players.length; // From ChainlinkVRF
+    if(tokenToCumRating[
 }
 
 ```
 
 Alternatively, we could create that mapping as \[REDACTED]s enter the arena to save on computation. Not sure if this is fault-proof regarding true randomization; will have to check.
+
+After the winner is selected, the contract will loop through each winner and change their metadata. Only the Arena contract will be able to change the metadata for obvious purposes.
+
+### Infinite Execution
+
+As you may or may not know, smart contracts can only execute functions when triggered by a transaction from an EOA (externally owned account). Therefore, to start each period (entry, game), an EOA must make a call to the contract.&#x20;
+
+**Methods**
+
+* The first and obvious method is funding an external wallet with funds and making continuous calls using an off-chain script (setInterval() for JS).&#x20;
+* Another method is using Chainlink Keepers. Gotta read more on it but it allows for programmable perpetual execution.&#x20;
