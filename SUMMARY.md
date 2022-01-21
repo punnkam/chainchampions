@@ -7,9 +7,9 @@
 * [\[REDACTED\]s](the-basics/redacted-s.md)
 * [Minting](the-basics/minting.md)
 * [The Arena](the-basics/the-arena.md)
-* [The Time Chamber & EXP](the-basics/the-time-chamber-and-exp.md)
+* [The Time Chamber & EXP](the-basics/the-chamber.md)
 * [Leaderboard](the-basics/leaderboard.md)
-* [Market Dynamics](the-basics/market-dynamics.md)
+* [Market Dynamics](technical/market-dynamics.md)
 * [FAQ](the-basics/faq.md)
 
 ## Technical

@@ -13,4 +13,6 @@ Players that are 2. may play their \[REDACTED] in the Arena or enter the Time Ch
 
 Also, people can buy $XP from DEXes and that would be beneficial to the whole ecosystem.
 
+In addition to the bounty and farming incentives, \[REDACTED]s stores the battle record indefinitely. Therefore, good battle records should increase the secondary sale price of a \[REDACTED]. Collectors may also favor low rating \[REDACTED]s with good battle records.
+
 ## Market Dynamics

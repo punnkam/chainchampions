@@ -62,6 +62,10 @@ Alternatively, we could create that mapping as \[REDACTED]s enter the arena to s
 
 After the winner is selected, the contract will loop through each winner and change their metadata. Only the Arena contract will be able to change the metadata for obvious purposes.
 
+### Bounty Distribution
+
+The bounty that players will receive will be the total deposit less a tax comprising of a gas tax for the executing wallet (or LINK) and a rake.&#x20;
+
 ### Infinite Execution
 
 As you may or may not know, smart contracts can only execute functions when triggered by a transaction from an EOA (externally owned account). Therefore, to start each period (entry, game), an EOA must make a call to the contract.&#x20;
