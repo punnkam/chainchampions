@@ -1,17 +1,14 @@
 # Minting
 
-Everything you've read so far has been in the **editor**. This window right here is where all your page content comes together.
+## Private Sale
 
-## Block-based
+* 2% of total \[REDACTED]s will be reserved for the team&#x20;
+* 2% of total \[REDACTED]s will be reserved for investors
+* 1% of total \[REDACTED]s will be reserved for honorary versions
 
-The Editor is full of all sorts of content blocks, like this hint:
+## Public Sale
 
-{% hint style="info" %}
-**Check me out!** I’m an editable 'hint' block, and I think I look pretty great 💅
-{% endhint %}
+{% embed url="https://www.paradigm.xyz/2021/10/a-guide-to-designing-effective-nft-launches" %}
+Paradigm guys are gods. Anish is a chad. We follow wat dey say.
+{% endembed %}
 
-You can access the block list at any time by hitting `CMD + /` (`CTRL + /` on Windows) to bring up a filterable list of blocks. Or you can check out our documentation for a full list of blocks with examples.
-
-## A note on markdown
-
-While the editor supports most common Markdown decorators, behind the scenes, GitBook is converting this to a document format that works with our block-based editor.

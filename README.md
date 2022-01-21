@@ -1,13 +1,9 @@
 # \[REDACTED] Game
 
-Refer to this https://docs.olympusdao.finance/main/&#x20;
+Refer to this https://docs.olympusdao.finance/main/ for structure
 
-## Try it out
-
-Use this area to play with the editor and get to grips with some of the content blocks. Have a play then move on to the next page!
-
-
+\[REDACTED] Game is an infinite on-chain battle royale fought by 8888 \[REDACTED]s, each fighting to win a share of a bounty. Each \[REDACTED] has unique attributes suited for the varying terrains of the Arena. \[REDACTED]s favored by their attributes and Arena terrain are more likely to be crowned a winner of that battle (and corresponding bounty \$$$). Individual \[REDACTED]s are stored completely on-chain along with the # of battles and $ of bounty won, making those battle records immutable for the rest of time.&#x20;
 
 ## Need to develop some sort of meme&#x20;
 
-Trying to get the effect similar to OHM (3, 3)
+Trying to get the effect similar to OHM (3, 3). If ur unfamiliar just search up olympus 3,3

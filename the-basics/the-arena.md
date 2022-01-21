@@ -1,10 +1,8 @@
 # The Arena
 
-## A place to group your spaces
+## An Infinite Battle Royale
 
-A collection in GitBook is kind of like a folder for your spaces or other collections. When you create a collection, you'll get a kind of ‘tree’ view in your sidebar.
-
-This makes it super easy to collect all your content into logical groups and can have a big impact on your GitBook experience!
+The arena is an infinite battle royale fought by \[REDACTED]s.&#x20;
 
 ## Going further with collections
 
