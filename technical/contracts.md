@@ -17,6 +17,7 @@ For Battle Camp:
 * Camp is Ownable, IERC721Receiver, Pausable&#x20;
 * Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
 * Refer to Barn.sol from wolf.game contracts
+* EXP is ERC20, Ownable&#x20;
 
 
 
