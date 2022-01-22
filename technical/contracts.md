@@ -2,18 +2,21 @@
 
 For assets:
 
-* Redacted is ERC721, Ownable
-* The ERC721 is from OpenZeppelin: [https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol)
+* Redacted is ERC721Enumerable, Ownable
+* The ERC721Enumerable is from OpenZeppelin: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
+* Refer to general implementations: BAYC, CryptoKitties
 
 For Arena:
 
-* Arena is IERC721Receiver, Ownable,&#x20;
-
-
+* Arena is IERC721Receiver (or ERC721Holder), Ownable
+* Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
+* Refer to Chain faces and poss Hunger Brainz and maticmike Nfthack
 
 For Time Chamber:
 
-
+* Chamber is Ownable, IERC721Receiver, Pausable&#x20;
+* Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
+* Refer to Barn.sol from wolf.game contracts
 
 
 
@@ -21,7 +24,13 @@ Contracts we can reference
 
 {% embed url="https://github.com/maticmike/nfthack" %}
 
-And&#x20;
+{% embed url="https://etherscan.deth.net/address/0xeb834ae72b30866af20a6ce5440fa598bfad3a42#code" %}
+Chainfaces
+{% endembed %}
+
+{% embed url="https://etherscan.deth.net/address/0xeb834ae72b30866af20a6ce5440fa598bfad3a42#code" %}
+Wolfgame
+{% endembed %}
 
 Hunger Brainz contract
 
