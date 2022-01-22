@@ -12,9 +12,9 @@ For Arena:
 * Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
 * Refer to Chain faces and poss Hunger Brainz and maticmike Nfthack
 
-For Time Chamber:
+For Battle Camp:
 
-* Chamber is Ownable, IERC721Receiver, Pausable&#x20;
+* Camp is Ownable, IERC721Receiver, Pausable&#x20;
 * Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
 * Refer to Barn.sol from wolf.game contracts
 
