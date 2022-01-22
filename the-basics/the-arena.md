@@ -4,7 +4,7 @@ The arena is an infinite battle royale fought by \[REDACTED]s. There are an infi
 
 ### Duration of entry and battle
 
-* The entry window time will be a fixed 88 blocks (\~ 20 minutes)
+* The entry window time will be a fixed 88 blocks (\~ 20 minutes) (Entry costs 0.1e)
 * When entry closes, the battle begins right away&#x20;
 * Every 88 blocks one \[REDACTED] is chosen to be a winner
 * The battle duration will be a fixed 888 blocks (\~ 3.2 hours) for a total of 10 winners each battle
@@ -61,6 +61,8 @@ function selectWinner() internal returns (uint256) {
 Alternatively, we could create that mapping as \[REDACTED]s enter the arena to save on computation. Not sure if this is fault-proof regarding true randomization; will have to check.
 
 After the winner is selected, the contract will loop through each winner and change their metadata. Only the Arena contract will be able to change the metadata for obvious purposes.
+
+**ALSO, LET'S CONSIDER BURNING THE TOKENS OF LOSERS AS WELL**
 
 ### Bounty Distribution
 
