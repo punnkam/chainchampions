@@ -14,6 +14,7 @@
 
 ## Technical
 
+* [Contracts](technical/contracts.md)
 * [Equations](technical/equations.md)
 * [Architecture](technical/architecture.md)
 * [Tokenomics](technical/tokenomics.md)
