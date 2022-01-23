@@ -8,7 +8,7 @@ For assets:
 
 For Arena:
 
-* Arena is IERC721Receiver (or ERC721Holder), Ownable
+* Arena is IERC721Receiver (or ERC721Holder), Ownable, Pausable
 * Contracts are from OZ: [https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
 * Refer to Chain faces and poss Hunger Brainz and maticmike Nfthack
 

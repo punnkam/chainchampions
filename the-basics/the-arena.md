@@ -8,7 +8,7 @@ The arena is an infinite battle royale fought by \[REDACTED]s. There are an infi
 * When entry closes, the battle begins right away
 * Battle ends the next day at entry.&#x20;
 * Every 88 blocks one \[REDACTED] is chosen to be a winner
-* The battle duration will be a fixed 888 blocks (\~ 3.2 hours) for a total of 10 winners each battle
+* The battle duration will be a fixed 18 hrs for a total of 10 winners each battle
 * After every battle, the cooldown time will be a fixed 88 blocks
 * Then entry window starts again, and repeat perpetually
 
