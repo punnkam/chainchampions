@@ -12,18 +12,7 @@ The arena is an infinite battle royale fought by \[REDACTED]s. There are an infi
 * After every battle, the cooldown time will be a fixed 88 blocks
 * Then entry window starts again, and repeat perpetually
 
-### Arena Terrain Randomization
 
-The arena terrain will be randomized using Chainlink VRF. Each terrain will provide a probabilistic advantage to certain \[REDACTED]s to ensure a more equitable playing field (shitty \[REDACTED]s still have a chance). Terrains are as follows:
-
-Add more as you'd like
-
-1. Desert (range+, less clothing+, melee-)
-2. Magnetism (leather+, metal-)
-3. Radiation (metal+, leather-)
-4. Atlantis (marine+, leather-)
-
-Each terrain will appear with an equal probability (?).
 
 ### Winner Selection
 
@@ -62,8 +51,6 @@ function selectWinner() internal returns (uint256) {
 Alternatively, we could create that mapping as \[REDACTED]s enter the arena to save on computation. Not sure if this is fault-proof regarding true randomization; will have to check.
 
 After the winner is selected, the contract will loop through each winner and change their metadata. Only the Arena contract will be able to change the metadata for obvious purposes.
-
-**ALSO, LET'S CONSIDER BURNING THE TOKENS OF LOSERS AS WELL**
 
 ### Bounty Distribution
 

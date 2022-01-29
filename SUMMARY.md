@@ -4,7 +4,7 @@
 
 ## The Basics
 
-* [\[REDACTED\]s](the-basics/redacted-s.md)
+* [Champions](the-basics/champions.md)
 * [Minting](the-basics/minting.md)
 * [The Arena](the-basics/the-arena.md)
 * [The Time Chamber & EXP](the-basics/the-chamber.md)
