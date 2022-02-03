@@ -12,7 +12,7 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-    
+
     // IPFS URI
     string public baseTokenURI;
 
@@ -20,14 +20,14 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     address arena;
 
     // mint price
-    uint256 public constant MINT_PRICE = .001 ether; 
-    
+    uint256 public constant MINT_PRICE = .001 ether;
+
     // maximum mint per wallet
     uint256 public MAX_PER_WALLET;
 
-    // total supply 
+    // total supply
     uint256 public MAX_CHAMPIONS;
-    bool public saleIsActive = false;
+    bool public saleIsActive = true;
 
     /**
      *  Modifiers
@@ -46,7 +46,11 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     /**
         Instantiates contracts and rarity tables
      */
-    constructor(uint256 _maxPerWallet, uint256 _maxSupply, string memory _URI) ERC721("Chain Champion", "CC") {
+    constructor(
+        uint256 _maxPerWallet,
+        uint256 _maxSupply,
+        string memory _URI
+    ) ERC721("Chain Champion", "CC") {
         MAX_PER_WALLET = _maxPerWallet;
         MAX_CHAMPIONS = _maxSupply;
         setBaseURI(_URI);
@@ -70,11 +74,13 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
      * READ METHODS
      */
 
-    function getTokenTraits(uint256 tokenId) external view returns (ChampionStruct memory) {
+    function getTokenTraits(uint256 tokenId)
+        external
+        view
+        returns (ChampionStruct memory)
+    {
         return tokenTraits[tokenId];
     }
-
-    
 
     /**
      *  USER METHODS
@@ -83,10 +89,16 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         uint256 totalMinted = _tokenIds.current();
 
         require(totalMinted.add(_amount) <= MAX_CHAMPIONS, "Not enough");
-        require(_amount > 0 && _amount <= MAX_PER_WALLET, "Cannot mint this amount");
-        require(msg.value >= MINT_PRICE.mul(_amount), "Not enough Ether to mint this amount");
+        require(
+            _amount > 0 && _amount <= MAX_PER_WALLET,
+            "Cannot mint this amount"
+        );
+        require(
+            msg.value >= MINT_PRICE.mul(_amount),
+            "Not enough Ether to mint this amount"
+        );
 
-        for(uint256 i = 0; i < _amount; i++) {
+        for (uint256 i = 0; i < _amount; i++) {
             _mintSingle();
         }
     }
@@ -96,26 +108,28 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         _tokenIds.increment();
     }
 
-    function tokensOfOwner(address _owner) 
-            external 
-            view 
-            returns (uint[] memory) {
-        uint tokenCount = balanceOf(_owner);
-        uint[] memory tokensId = new uint256[](tokenCount);
-        for (uint i = 0; i < tokenCount; i++) {
+    function tokensOfOwner(address _owner)
+        external
+        view
+        returns (uint256[] memory)
+    {
+        uint256 tokenCount = balanceOf(_owner);
+        uint256[] memory tokensId = new uint256[](tokenCount);
+        for (uint256 i = 0; i < tokenCount; i++) {
             tokensId[i] = tokenOfOwnerByIndex(_owner, i);
         }
-     
+
         return tokensId;
     }
-
-
 
     /**
      *  ARENA METHODS
      */
-    function incrementWins(uint256[] memory tokenIds, uint256 winnings) external onlyArena {
-        for(uint256 i = 0; i < tokenIds.length; i++) {
+    function incrementWins(uint256[] memory tokenIds, uint256 winnings)
+        external
+        onlyArena
+    {
+        for (uint256 i = 0; i < tokenIds.length; i++) {
             ChampionStruct storage curr = tokenTraits[i];
             curr.numWins++;
             curr.totalWinnings += winnings;
@@ -131,7 +145,7 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
 
         require(totalMinted.add(30) < MAX_CHAMPIONS, "Not enough");
 
-        for(uint256 i = 0; i < 30; i++) {
+        for (uint256 i = 0; i < 30; i++) {
             _mintSingle();
         }
     }
@@ -143,17 +157,13 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         payable(owner()).transfer(address(this).balance);
     }
 
-    function _baseURI() internal 
-                    view 
-                    virtual 
-                    override 
-                    returns (string memory) {
-     return baseTokenURI;
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseTokenURI;
     }
-    
+
     function setBaseURI(string memory _baseTokenURI) public onlyOwner {
         baseTokenURI = _baseTokenURI;
-    }   
+    }
 
     /**
      * enables owner to pause / unpause minting
@@ -166,8 +176,7 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     /**
      * set arena address (failsafe)
      */
-     function setArena(address _arena) external onlyOwner {
-         arena = _arena;
-     }
-             
+    function setArena(address _arena) external onlyOwner {
+        arena = _arena;
+    }
 }
