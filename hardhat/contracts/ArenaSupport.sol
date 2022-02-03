@@ -7,6 +7,7 @@ import "hardhat/console.sol";
 	Used to call functions from Arena.sol 
 	- To start games
 	- To determine winners
+	- Using Chainlink Keepers
 */
 contract ArenaSupport {
 
