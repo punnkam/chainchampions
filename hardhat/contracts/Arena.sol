@@ -74,4 +74,11 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     * INTERNAL METHODS *  
     *******************/
 
+    /*******************
+    * OVERRIDE METHODS *  
+    *******************/
+    function onERC721Received(address, address, uint256, bytes memory) external pure returns (bytes4) {
+        return this.onERC721Received.selector;
+    }
+
 }

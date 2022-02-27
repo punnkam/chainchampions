@@ -13,25 +13,16 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    // IPFS URI
-    string public baseTokenURI;
+    string public baseTokenURI; // IPFS URI
+    address arena; // the arena's contract address
+    uint256 public constant MINT_PRICE = .001 ether; // mint price
+    uint256 public MAX_PER_WALLET; // maximum mint per wallet
+    uint256 public MAX_CHAMPIONS; // total supply
+    bool public saleIsActive = true; // bool for activeSale
 
-    // the arena's contract address
-    address arena;
-
-    // mint price
-    uint256 public constant MINT_PRICE = .001 ether;
-
-    // maximum mint per wallet
-    uint256 public MAX_PER_WALLET;
-
-    // total supply
-    uint256 public MAX_CHAMPIONS;
-    bool public saleIsActive = true;
-
-    /**
-     *  Modifiers
-     */
+    /*******************
+    **** MODIFIERS ****  
+    *******************/
 
     modifier onlyActive() {
         require(saleIsActive, "Minting is not live");
@@ -42,9 +33,9 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         require(msg.sender == arena, "Not arena contract");
         _;
     }
-
+    
     /**
-        Instantiates contracts and rarity tables
+     * @dev Initalizes the Champion contract and sets limit parameters.
      */
     constructor(
         uint256 _maxPerWallet,
@@ -70,10 +61,13 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     // mapping from hashed(tokenTrait) to tokenId
     mapping(uint256 => uint256) public existingTraits;
 
-    /**
-     * READ METHODS
-     */
+    /*******************
+    *** VIEW METHODS ***  
+    *******************/
 
+    /**
+     * @dev Returns a struct of the Champion's data given tokenId.
+     */
     function getTokenTraits(uint256 tokenId)
         external
         view
@@ -82,8 +76,12 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         return tokenTraits[tokenId];
     }
 
+    /*******************
+    *** USER METHODS ***  
+    *******************/
+
     /**
-     *  USER METHODS
+     * @dev Mint X number of champions to caller's wallet (must be less than limit).
      */
     function mint(uint256 _amount) external payable onlyActive {
         uint256 totalMinted = _tokenIds.current();
@@ -103,11 +101,17 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         }
     }
 
+    /**
+     * @dev Initalizes the Champion contract and sets limit parameters.
+     */
     function _mintSingle() private {
         _safeMint(msg.sender, _tokenIds.current());
         _tokenIds.increment();
     }
 
+    /**
+     * @dev Returns a list of tokens owned by an address.
+     */
     function tokensOfOwner(address _owner)
         external
         view
@@ -122,8 +126,12 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         return tokensId;
     }
 
+    /*******************
+    *** ARENA METHODS **  
+    *******************/
+
     /**
-     *  ARENA METHODS
+     * @dev Edit Champion metadata to increment its win count by modifying the struct. 
      */
     function incrementWins(uint256[] memory tokenIds, uint256 winnings)
         external
@@ -136,10 +144,14 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
         }
     }
 
-    /**
-     * ADMIN METHODS
-     */
+    /*******************
+    *** ADMIN METHODS **  
+    *******************/
 
+    /**
+     * @dev Reserve a fixed number of Champions for the team.
+     *      Only the owner can call the function.
+     */
     function reserve() public onlyOwner {
         uint256 totalMinted = _tokenIds.current();
 
@@ -151,22 +163,16 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     }
 
     /**
-     * allows owner to withdraw funds from minting
+     * @dev Withdraw funds from the contract
+     * Only the owner can call the function.
      */
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return baseTokenURI;
-    }
-
-    function setBaseURI(string memory _baseTokenURI) public onlyOwner {
-        baseTokenURI = _baseTokenURI;
-    }
-
     /**
-     * enables owner to pause / unpause minting
+     * @dev Change the active state of the contract.
+     * Only the owner can call the function.
      */
     function setPaused(bool _paused) external onlyOwner {
         if (_paused) _pause();
@@ -174,9 +180,30 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     }
 
     /**
-     * set arena address (failsafe)
+     * @dev Set the arena contract address
+     * Only the owner can call the function.
      */
     function setArena(address _arena) external onlyOwner {
         arena = _arena;
     }
+
+    /*******************
+    * INTERNAL METHODS *  
+    *******************/
+
+    /**
+     * @dev Return the baseTokenURI.
+     */
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseTokenURI;
+    }
+
+    /**
+     * @dev Set the baseURI
+     */
+    function setBaseURI(string memory _baseTokenURI) public onlyOwner {
+        baseTokenURI = _baseTokenURI;
+    }
+
+    
 }
