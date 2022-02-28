@@ -1,54 +1,78 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-
-const Container = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	margin: 1.5rem;
-	margin-top: 2.5rem;
-`;
-
-const StyledLink = styled(Link)`
-	color: black;
-	font-size: 1rem;
-	margin: 0.5rem;
-	margin-right: 3rem;
-	&:hover {
-		text-decoration: none;
-		color: grey;
-	}
-`;
-
-const Title = styled(Link)`
-	color: black;
-	font-size: 1.7rem;
-	margin-left: 2rem;
-	margin-right: 4rem;
-	&:hover {
-		text-decoration: none;
-		color: black;
-	}
-`;
-
-const Divider = styled.hr`
-	border-top: 3px dashed black;
-`;
+import React, { useState } from 'react'
+import './style/Navbar.css'
+import { NavLink } from 'react-router-dom'
 
 
-export default function Navbar() {
-	return (
-		<div>
-			<Container>
-				<Title to='/'>Chain Champions</Title>
-				<StyledLink to='/'>Home</StyledLink>
-				<StyledLink to='/'>Arena</StyledLink>
-				<StyledLink to='/'>Whitepaper</StyledLink>
-				<StyledLink to='/'>Staking</StyledLink>
-			</Container>
-			<Divider />
-		</div>
-		
-	)
+const Navbar = () => {
+    const [click, setClick] = useState(false);
+
+    const handleClick = () => setClick(!click);
+
+    return (
+        <>
+            <nav className="navbar">
+                <div className="nav-container ">
+                    <NavLink exact to="/" className="nav-logo nes-container is-dark">
+                        ChainChampions
+                    </NavLink>
+
+                     <ul className={click ? "nav-menu active" : "nav-menu"}>
+                        <li className="nav-item nes-container is-dark">
+                            <NavLink
+                                exact
+                                to="/"
+                                activeClassName="active"
+                                className="nav-links"
+                                onClick={handleClick}
+                            >
+                                HOME
+                            </NavLink>
+                        </li>
+                         <li className="nav-item nes-container is-dark">
+                            <NavLink
+                                exact
+                                to="/team"
+                                activeClassName="active"
+                                className="nav-links"
+                                onClick={handleClick}
+                            >
+                                TEAM
+                            </NavLink>
+                        </li>
+                            <li className="nav-item nes-container is-dark">
+                            <NavLink
+                                exact
+                                to="/whitepaper"
+                                activeClassName="active"
+                                className="nav-links"
+                                onClick={handleClick}
+                            >
+                                WHITEPAPER
+                            </NavLink>
+                        </li>
+                        <li className="nav-item nes-container is-dark">
+                            <NavLink
+                                exact
+                                to="/roadmap"
+                                activeClassName="active"
+                                className="nav-links"
+                                onClick={handleClick}
+                            >
+                               ROADMAP
+                            </NavLink>
+                        </li>
+                        <i class="nes-icon twitter is-large"></i>
+                        <i class="nes-icon twitter is-large"></i>
+                        <i class="nes-icon twitter is-large"></i>
+
+                     </ul>
+                    <div className="nav-icon" onClick={handleClick}>
+                        <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+                    </div>
+                </div>
+            </nav>
+        </>
+  )
 }
+
+export default Navbar;

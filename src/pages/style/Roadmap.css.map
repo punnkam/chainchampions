@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CACR;EACI,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,gCAAgC;EAClD,mBAAmB,EAAE,MAAM;EAC3B,iBAAiB,EAAE,SAAS;EAC5B,eAAe,EAAE,KAAK;EACtB,qBAAqB,EAAE,KAAK;EAC5B,UAAU,EAAE,MAAM;EAClB,UAAU,EAAE,MAAM;CACrB",
+    "sources": [
+        "Roadmap.scss"
+    ],
+    "names": [],
+    "file": "Roadmap.css"
+}

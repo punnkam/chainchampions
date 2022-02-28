@@ -1,21 +1,22 @@
 import './App.css';
 import 'nes.css/css/nes.min.css';
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from './components/Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+import Home from './pages/Home';
+import Team from './pages/Team';
+import Whitepaper from './pages/Whitepaper';
+import Roadmap from './pages/Roadmap';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <BrowserRouter>
-          <Navbar/>  
-        </BrowserRouter>
-        
-      </header>
-      
-      <a class="nes-btn" href="#">Random Button</a>
-
-  </div>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/team" element={<Team/>}/>
+          <Route path="/whitepaper" element={<Whitepaper />}/>
+          <Route path="/roadmap" element={<Roadmap/>}/>
+        </Routes>  
+      </BrowserRouter>
   );
 }
 
