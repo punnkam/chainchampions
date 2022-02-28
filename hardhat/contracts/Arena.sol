@@ -12,10 +12,11 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     ***** STORAGE ******  
     *******************/
 
-    uint256 lastMatchBlock; // arena last game block
-    uint256 lobbyLengthBlock; // lobby blocktime
-    uint256 matchLengthBlock; // match blocktime
+    uint256 lastMatchTime; // arena last game block
+    uint256 lobbyLengthTime; // lobby blocktime
+    uint256 matchLengthTime; // match blocktime
     uint256 matchCounter; // game counter --> use chainlink keepers
+    uint256 winner; // tokenId of winning Champion
     bool arenaActive; // arena active bool
     bool contractActive; // contract active bool
     mapping(address => uint256) depositorToToken; // depositor mapping
@@ -43,8 +44,12 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     /**
      * @dev Initializes the arena contract and initially
      *      sets the contract arena and the contract state as inactive
+     * @param _arenaActive is the active state of the arena
+     * @param _contractActive is the active state of the contract
      */
-    constructor(bool _arenaActive, bool _contractActive) {
+    constructor(uint256 _lobbyLengthTime, uint256 _matchLengthTime, bool _arenaActive, bool _contractActive) {
+        lobbyLengthTime = _lobbyLengthTime;
+        matchLengthTime = _matchLengthTime;
         arenaActive = _arenaActive;
         contractActive = _contractActive;
     }
@@ -52,12 +57,40 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     /*******************
     *** VIEW METHODS ***  
     *******************/
+
+    /**
+     * @dev Returns the arena information.
+     */
+    function getArenaDetails() public view returns() {
+
+    }
+
+    /**
+     * @dev Returns the active state of a tokenId 
+     */
+    function getTokenActive(uint256 _tokenId) public view returns(bool) {
+        return tokenIsActive[_tokenId];
+    }
     
     /**
-     * @dev 
+     * @dev Returns the active state of the arena
      */
-    function testFunction(address fee) public returns(uint256) {
+    function getArenaActive() public view returns(bool) {
+        return arenaActive;
+    }
 
+    /**
+     * @dev Returns the remaining match time
+     */
+    function matchTimeLeft() public view returns(uint256) {
+        return lastMatchTime + matchLengthTime - block.timestamp;
+    }
+
+    /**
+     * @dev Returns the winner (of previous match)
+     */
+    function getWinner() public view returns(uint256) {
+        return winner;
     }
 
     /*******************
