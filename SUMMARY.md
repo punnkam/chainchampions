@@ -12,10 +12,3 @@
 * [Market Dynamics](technical/market-dynamics.md)
 * [FAQ](the-basics/faq.md)
 
-## Technical
-
-* [Contracts](technical/contracts.md)
-* [Equations](technical/equations.md)
-* [Architecture](technical/architecture.md)
-* [Tokenomics](technical/tokenomics.md)
-* [Gas optimizations (maybe)](technical/gas-optimizations-maybe.md)
