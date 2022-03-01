@@ -1,2 +1,0 @@
-# Gas optimizations (maybe)
-
