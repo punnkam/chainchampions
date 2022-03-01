@@ -33,6 +33,7 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     bool arenaActive; // arena active bool
     bool gameActive; // game active bool
     bool internal locked; // reentrancy guard variable
+    uint256[] tokens; // id of all champions currently in the Arena for game end loop
     mapping(uint256 => address) tokenToDepositor; // depositor mapping
     mapping(uint256 => bool) tokenIsActive; // isActive mapping
     mapping(address => uint256) withdrawableBounty; // withdraw balance mapping
@@ -154,8 +155,10 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     function enterArena(uint256 _tokenId) external payable onlyArenaActive {
         require(msg.value >= bountySize, "Submitted bounty is not large enough to enter the Arena");
         require(msg.sender == champion.ownerOf(_tokenId), "You do not own this Champion");
+        tokens.push(_tokenId);
 
         _enterArena(_tokenId);
+        emit EnteredArena(_tokenId, msg.sender);
     }
 
     /**
@@ -167,6 +170,7 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
         require(msg.sender == tokenToDepositor[_tokenId], "You don't own this Champion");
 
         _exitArena(_tokenId);
+        emit ExitedArena(_tokenId, msg.sender);
     }
 
     /**
@@ -197,18 +201,34 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     *** ADMIN METHODS **  
     *******************/
 
+
+    /**
+     * @dev Starts the game, only called by owner
+     */
     function startGame() external onlyOwner {
-
+        require(block.timestamp > lastMatchTime + lobbyLengthTime, "We are still in the Lobby Phase");
+        gameActive = true;
     }
 
+    /**
+     * @dev Ends the game, only called by owner
+     */
     function endGame() external onlyOwner onlyGameActive {
+        require(block.timestamp > lastMatchTime + lobbyLengthTime + matchLengthTime, "The game should not end yet");
+        gameActive = false;
 
+        winner = _crownWinner();
+        lastMatchTime = block.timestamp;
+
+        for(uint256 i=0; i<tokens.length; i++) 
+            tokenIsActive[i] = false;
+
+        delete tokens;
     }
 
-    function withdraw() external onlyOwner {
-
-    }
-
+    /**
+     * @dev Points the reference variable to the champion contract, only called by owner
+     */
     function setChampion(address _contract) external onlyOwner {
         champion = Champion(_contract);
     }
@@ -218,21 +238,65 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     * INTERNAL METHODS *  
     *******************/
     
+    /**
+     * @dev Called by user to enter champion into arena
+     * @param _tokenId id of the Champion
+     */
     function _enterArena(uint256 _tokenId) internal onlyArenaActive {
         champion.transferFrom(msg.sender, address(this), _tokenId);
         tokenToDepositor[_tokenId] = msg.sender;
         tokenIsActive[_tokenId] = true;
     }
 
+    /**
+     * @dev Called by user to exit champion from arena
+     * @param _tokenId id of the Champion
+     */
     function _exitArena(uint256 _tokenId) internal onlyArenaActive {
         champion.transferFrom(address(this) , msg.sender, _tokenId);
         delete tokenToDepositor[_tokenId];
         tokenIsActive[_tokenId] = false;
     }
 
-    function _crownWinner() internal gameInactive {
+
+    /**
+     * @dev Determines the winner of the current game using a random number generated
+     *      by a keccak hash. In prod, we'll use Chainlink VRF to generate the random
+     *      number to prevent determinism exploits.
+     */
+    function _crownWinner() internal gameInactive returns(uint256) {
+        uint256 rand = _random(0, champion.balanceOf(address(this)));
+        uint256 winningChamp = champion.tokenByIndex(rand);
+        while(!tokenIsActive[winningChamp]) {
+            rand = _random(0, champion.balanceOf(address(this)));
+            winningChamp = champion.tokenByIndex(rand);
+        }
+        address owner = champion.ownerOf(winningChamp);
         
+        withdrawableBounty[owner] += _getTaxedBounty();
+
         // loop through tokenIsActive and set all to false
+        emit WinnerSelected(winningChamp, owner, _getTaxedBounty());
+        return winningChamp;
+    }
+
+    /**
+     * @dev Generates a random number using keccak256() hash function
+     * @param start starting number
+     * @param end ending number
+     */
+    function _random(uint256 start, uint256 end) internal view returns (uint256) {
+        uint256 randomNumber = uint256(
+            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
+        ) % (end - start);
+        return randomNumber + start;
+    }
+
+    /**
+     * @dev Returns the taxed bounty amount
+     */
+    function _getTaxedBounty() internal view returns (uint256) {
+        return address(this).balance - address(this).balance/100 * 2;
     }
 
     /*******************
