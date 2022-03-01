@@ -29,16 +29,22 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
     uint256 matchLengthTime; // match blocktime
     uint256 matchCounter; // game counter --> use chainlink keepers
     uint256 winner; // tokenId of winning Champion
+    uint8 bountySize; // amount needed to enter Arena 
     bool arenaActive; // arena active bool
     bool gameActive; // game active bool
-    mapping(address => uint256) depositorToToken; // depositor mapping
+    bool internal locked; // reentrancy guard variable
+    mapping(uint256 => address) tokenToDepositor; // depositor mapping
     mapping(uint256 => bool) tokenIsActive; // isActive mapping
+    mapping(address => uint256) withdrawableBounty; // withdraw balance mapping
 
     Champion champion; // Reference to Champion contract
 
     /*******************
     ****** EVENTS ******  
     *******************/
+    event EnteredArena(uint256 tokenId, address owner);
+    event ExitedArena(uint256 tokenId, address owner);
+    event WinnerSelected(uint256 tokenId, address owner, uint256 winnings);
     
 
     /*******************
@@ -59,17 +65,28 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
         _;
     }
 
+    modifier reentrancyGuard() {
+        require(!locked);
+        locked = true;
+        _;
+        locked = false;
+    }
+
     /**
      * @dev Initializes the arena contract and initially
      *      sets the contract arena and the contract state as inactive
+     * @param _lobbyLengthTime length of lobby in time units
+     * @param _matchLengthTime length of match in time units
+     * @param _bountySize the amount needed to enter the arena
      * @param _arenaActive is the active state of the arena
      * @param _gameActive is the active state of the contract
      */
-    constructor(uint256 _lobbyLengthTime, uint256 _matchLengthTime, bool _arenaActive, bool _gameActive) {
+    constructor(uint256 _lobbyLengthTime, uint256 _matchLengthTime, uint8 _bountySize, bool _arenaActive, bool _gameActive) {
         lobbyLengthTime = _lobbyLengthTime;
         matchLengthTime = _matchLengthTime;
         arenaActive = _arenaActive;
         gameActive = _gameActive;
+        bountySize = _bountySize;
     }
 
     /*******************
@@ -119,16 +136,60 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
         return winner;
     }
 
+    /**
+     * @dev Returns the prize pool (amount in the contract)
+     */
+    function getPrize() public view returns(uint256) {
+        return address(this).balance;
+    }
+
     /*******************
     *** USER METHODS ***  
     *******************/
     
-    function enterArena(uint256[] calldata _tokenIds) external onlyArenaActive {
+    /**
+     * @dev Allows owner of a Champion to enter the Champion into the Arena.
+     * @param _tokenId id of the ERC721 asset (Champion)
+     */
+    function enterArena(uint256 _tokenId) external payable onlyArenaActive {
+        require(msg.value >= bountySize, "Submitted bounty is not large enough to enter the Arena");
+        require(msg.sender == champion.ownerOf(_tokenId), "You do not own this Champion");
 
+        _enterArena(_tokenId);
     }
 
-    function exitArena(uint256[] calldata _tokenIds) external onlyArenaActive {
+    /**
+     * @dev Allows owner of a Champion to exit the Champion from the Arena.
+     * @param _tokenId id of the ERC721 asset (Champion)
+     */
+    function exitArena(uint256 _tokenId) external onlyArenaActive gameInactive {
+        require(address(this) == champion.ownerOf(_tokenId), "This Champion is not in the contract");
+        require(msg.sender == tokenToDepositor[_tokenId], "You don't own this Champion");
 
+        _exitArena(_tokenId);
+    }
+
+    /**
+     * @dev Allows owner of a Champion that is deposited in the Arena to play again
+     * @param _tokenId id of the ERC721 asset (Champion)
+     */
+    function replay(uint256 _tokenId) external payable onlyArenaActive gameInactive {
+        require(address(this) == champion.ownerOf(_tokenId), "This Champion is not in the contract");
+        require(msg.sender == tokenToDepositor[_tokenId], "You don't own this Champion");
+        require(msg.value >= bountySize, "Submitted bounty is not large enough to replay the game");
+
+        tokenIsActive[_tokenId] = true;
+    }
+
+    /**
+     * @dev Allows players that own a tokenId that won to withdraw their bounty share
+     */
+    function withdrawBounty() external reentrancyGuard {
+        require(withdrawableBounty[msg.sender] > 0, "No bounty to withdraw");
+        uint256 amount = withdrawableBounty[msg.sender];
+        withdrawableBounty[msg.sender] = 0;
+        (bool sent, ) = msg.sender.call{value: amount}("");
+        if(!sent) withdrawableBounty[msg.sender] = amount;
     }
 
 
@@ -148,21 +209,30 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
 
     }
 
+    function setChampion(address _contract) external onlyOwner {
+        champion = Champion(_contract);
+    }
+
 
     /*******************
     * INTERNAL METHODS *  
     *******************/
     
     function _enterArena(uint256 _tokenId) internal onlyArenaActive {
-
+        champion.transferFrom(msg.sender, address(this), _tokenId);
+        tokenToDepositor[_tokenId] = msg.sender;
+        tokenIsActive[_tokenId] = true;
     }
 
     function _exitArena(uint256 _tokenId) internal onlyArenaActive {
-
+        champion.transferFrom(address(this) , msg.sender, _tokenId);
+        delete tokenToDepositor[_tokenId];
+        tokenIsActive[_tokenId] = false;
     }
 
     function _crownWinner() internal gameInactive {
-
+        
+        // loop through tokenIsActive and set all to false
     }
 
     /*******************
