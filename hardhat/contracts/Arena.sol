@@ -196,11 +196,9 @@ contract Arena is IERC721Receiver, Ownable, Pausable {
         if(!sent) withdrawableBounty[msg.sender] = amount;
     }
 
-
     /*******************
     *** ADMIN METHODS **  
     *******************/
-
 
     /**
      * @dev Starts the game, only called by owner

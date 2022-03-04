@@ -36,8 +36,24 @@ contract Camp is Ownable, IERC721Receiver, Pausable {
     /*******************
     ****** EVENTS ******  
     *******************/
+
     event TokenStaked(address owner, uint256 tokenId, uint256 value);
     event TokenUnstaked(uint256 tokenId, uint256 earned, bool unstaked);
+    
+    /*******************
+    **** MODIFIERS ****  
+    *******************/
+
+    modifier _updateEarnings() {
+        if (totalExpEarned < MAX_REWARDS) {
+        totalExpEarned += 
+            (block.timestamp - lastClaimTime)
+            * totalChampStaked
+            * EXP_YIELD / 1 days; 
+        lastClaimTime = block.timestamp;
+        }
+        _;
+    }
 
     /**
      * @dev Initalizes the Camp contract and sets contract addresses.
@@ -47,6 +63,74 @@ contract Camp is Ownable, IERC721Receiver, Pausable {
     constructor(address _champion, address _exp) {
         champion = Champion(_champion);
         exp = EXP(_exp);
+    }
+
+    /*******************
+    *** VIEW METHODS ***  
+    *******************/
+
+    /**
+     * @dev Returns the count of Champions.
+     */
+    function getChampCount() public view returns(uint256, uint256, uint256, bool) {
+        
+    }
+
+    /*******************
+    *** USER METHODS ***  
+    *******************/
+
+    /**
+     * Adds multiple Champions to camp
+     * @param account The address of the staker
+     * @param tokenIds The IDs of the Champions to stake
+     */
+    function stakeMany(address account, uint16[] calldata tokenIds) external {
+        
+    }
+
+    /**
+     * Claim reward from camp and indicate whether to unstake
+     * @param tokenIds The IDs of the Champions to stake
+     * @param unstake Whether or not to unstake Champion
+     */
+    function claimMany(uint16[] calldata tokenIds, bool unstake) external {
+        
+    }
+
+    /*******************
+    *** ADMIN METHODS **  
+    *******************/
+
+    /**
+     * Enables owner to pause / unpause minting
+     * @param _paused Paused or not
+     */
+    function setPaused(bool _paused) external onlyOwner {
+        if (_paused) _pause();
+        else _unpause();
+    }
+
+    /*******************
+    * INTERNAL METHODS *  
+    *******************/
+
+    /**
+     * Add single Champion to camp
+     * @param account The address of the staker
+     * @param tokenId The Champion's tokenId to stake
+     */
+    function _stake(address account, uint256 tokenId) internal {
+        
+    }
+
+    /**
+     * Claim rewards for camp
+     * @param tokenId The Champion's tokenId to stake
+     * @param unstake Whether to unstake Champion
+     */
+    function _claim(uint256 tokenId, bool unstake) internal {
+        
     }
 
     /*******************
