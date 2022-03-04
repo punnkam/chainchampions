@@ -7,8 +7,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract EXP is ERC20, Ownable {
     // a mapping from an address to whether or not it can mint / burn
     mapping(address => bool) controllers;
+    uint256 maxSupply; // maximum token supply
 
-    constructor() ERC20("EXP", "EXP") {}
+    constructor(uint256 _maxSupply) ERC20("EXP", "EXP") {
+        maxSupply = _maxSupply;
+    }
 
     /**
      * mints $EXP to a recipient
@@ -17,6 +20,7 @@ contract EXP is ERC20, Ownable {
      */
     function mint(address to, uint256 amount) external {
         require(controllers[msg.sender], "Only controllers can mint");
+        require(totalSupply() <= maxSupply, "Cannot mint more than maxSupply");
         _mint(to, amount);
     }
 
