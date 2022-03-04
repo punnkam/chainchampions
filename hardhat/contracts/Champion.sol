@@ -43,6 +43,8 @@ contract Champion is ERC721Enumerable, Ownable, Pausable {
     
     /**
      * @dev Initalizes the Champion contract and sets limit parameters.
+     * @param _maxPerWallet Maximum allowed Champions mint per wallet
+     * @param _maxSupply Total supply of Champions 
      */
     constructor(
         uint256 _maxPerWallet,
